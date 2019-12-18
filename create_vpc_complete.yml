@@ -64,9 +64,9 @@
           cidr_ip: 0.0.0.0/0
     register: ec2_group_return
     
-    - name: Make result values available to Playbooks in workflow
-      set_stats:
-        data:
-          vpc_subnet_id:  "{{ ec2_vpc_subnet_return.subnet.id }}"
-          security_group_id: "{{ ec2_group_return.group_id }}"
+  - name: Make result values available to Playbooks in workflow
+    set_stats:
+      data:
+        vpc_subnet_id:  "{{ ec2_vpc_subnet_return.subnet.id }}"
+        security_group_id: "{{ ec2_group_return.group_id }}"
     
