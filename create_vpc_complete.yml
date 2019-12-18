@@ -49,7 +49,7 @@
  
   - name: Create Security Group
     ec2_group:
-      name: "{{ security_group_name }}"
+      name: "{{ vpc }}_security_group"
       description: HTTP and SSH Security Group
       vpc_id: "{{ ec2_vpc_net_return.vpc.id }}"
       region: "{{ region }}"
