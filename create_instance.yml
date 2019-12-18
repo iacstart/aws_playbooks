@@ -8,8 +8,8 @@
     ec2:
       region: "{{ region }}"
       key_name: "{{ ssh_key }}"
-      group_id: "{{ security_group }}"
-      vpc_subnet_id: "{{ subnet.subnet.id }}"
+      group_id: "{{ security_group_id }}"
+      vpc_subnet_id: "{{ vpc_subnet_id }}"
       instance_type: t2.micro
       image: "{{ ami_id }}"
       wait: true
