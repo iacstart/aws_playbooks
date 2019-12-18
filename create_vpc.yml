@@ -1,0 +1,66 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+  - name: Create AWS virtual private cloud (VPC)
+    ec2_vpc_net:
+      name: "{{ vpc_name }}"
+      cidr_block: "{{ vpc_cidr }}"
+      region: "{{ region }}"
+      dns_support: yes
+      dns_hostnames: yes
+      tenancy: default
+      state: "{{ state }}"
+    register: ec2_vpc_net_return
+    
+  - name: Add subnet to VPC
+    ec2_vpc_subnet:
+      state: "{{ state }}"
+      vpc_id: "{{ ec2_vpc_net_return.vpc.id }}"
+      region: "{{ region }}"
+      cidr: "{{ subnet_cidr }}"
+      map_public: yes
+      resource_tags:
+        Name: "{{ subnet_name }}"
+    register: ec2_vpc_subnet_return
+ 
+  - name: Create an Internet Gateway (IGW)
+    ec2_vpc_igw:
+     vpc_id: "{{ ec2_vpc_net_return.vpc.id }}"
+     region: "{{ region }}"
+     state: "present"
+     tags:
+       Name: "{{ igw_name }}"
+    register: ec2_vpc_igw_return
+  
+  - name: Create route table to IGW
+    ec2_vpc_route_table:
+      vpc_id: "{{ ec2_vpc_net_return.vpc.id }}"
+      region: "{{ region }}"
+      subnets:
+        - "{{ ec2_vpc_subnet_return.subnet.id }}"
+      routes:
+        - dest: 0.0.0.0/0
+          gateway_id: "{{ ec2_vpc_igw_return.gateway_id  }}"
+      tags:
+        Name: "{{ route_table_name }}"
+ 
+  - name: Create Security Group
+    ec2_group:
+      name: Open 80 and 22 ports
+      description: HTTP and SSH Security Group
+      vpc_id: "{{ ec2_vpc_net_return.vpc.id }}"
+      region: "{{ region }}"
+      rules:
+        - proto: tcp
+          ports:
+          - 80
+          cidr_ip: 0.0.0.0/0
+        - proto: tcp
+          ports:
+          - 22
+          cidr_ip: 0.0.0.0/0
+    register: ec2_group_return
+    
