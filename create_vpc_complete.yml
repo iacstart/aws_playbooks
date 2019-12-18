@@ -6,7 +6,7 @@
   tasks:
   - name: Create AWS virtual private cloud (VPC)
     ec2_vpc_net:
-      name: "{{ vpc_name }}"
+      name: "{{ vpc }}_vpc"
       cidr_block: "{{ vpc_cidr }}"
       region: "{{ region }}"
       dns_support: yes
@@ -23,7 +23,7 @@
       cidr: "{{ subnet_cidr }}"
       map_public: yes
       resource_tags:
-        Name: "{{ subnet_name }}"
+        Name: "{{ vpc }}_subnet"
     register: ec2_vpc_subnet_return
  
   - name: Create an Internet Gateway (IGW)
@@ -32,7 +32,7 @@
      region: "{{ region }}"
      state: "present"
      tags:
-       Name: "{{ igw_name }}"
+       Name: "{{ vpc }}_igw"
     register: ec2_vpc_igw_return
   
   - name: Create route table to IGW
