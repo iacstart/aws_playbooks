@@ -6,16 +6,16 @@
   tasks:
   - name: Provision a set of instances
     ec2:
-      region: "{{ aws_region }}"
-      key_name: "{{ aws_key }}"
-      group: "{{ security_group }}"
+      region: "{{ region }}"
+      key_name: "{{ ssh_key }}"
+      group_id: "{{ security_group }}"
+      vpc_subnet_id: "{{ subnet.subnet.id }}"
       instance_type: t2.micro
       image: "{{ ami_id }}"
       wait: true
       instance_tags:
-        Name: towerdemo
-      exact_count: "{{ instcount }}"
-      count_tag: 
-        Name: towerdemo
+        Name: iacstart_webserver
+      #exact_count: "{{ instcount }}"
+      #count_tag: 
+        #Name: towerdemo
     register: ec2
-
