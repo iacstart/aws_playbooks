@@ -45,7 +45,7 @@
         - dest: 0.0.0.0/0
           gateway_id: "{{ ec2_vpc_igw_return.gateway_id  }}"
       tags:
-        Name: "{{ route_table_name }}"
+        Name: "{{ vpc }}_routetable }}"
  
   - name: Create Security Group
     ec2_group:
