@@ -1,6 +1,8 @@
 = Playbooks to automate AWS tasks
 
-== create_instance.yml
+== Create Instance(s)
+
+Name: `create_instance.yml`
 
 Variables with examples:
 
@@ -10,4 +12,15 @@ aws_key: grieger_ec2
 aws_region: eu-central-1
 security_group: towerdemo
 instcount: 2
+----
+
+== Create Security Group
+
+Name: create_secgroup.yml
+
+Variables with examples:
+
+----
+security_group:
+region:  
 ----
