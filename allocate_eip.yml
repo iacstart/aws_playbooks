@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+  - name: allocate a new elastic IP without associating it to anything
+    ec2_eip:
+      state: present
+    register: eip
