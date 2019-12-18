@@ -39,11 +39,6 @@ Variables:
 
 ----
 vpc: "iacstart"
-vpc_name: "{{ vpc }}_VPC"
-igw_name: "{{ vpc }}_IGW"
-subnet_name: "{{ vpc }}_subnet"
-security_group_name: "{{ vpc }}_security_group"
-route_table_name: "{{ vpc }}_route_table"
 vpc_cidr: "10.0.0.0/16"
 subnet_cidr: "10.0.1.0/24"
 state: "present"
