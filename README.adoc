@@ -1,31 +1,42 @@
-= Playbooks to automate AWS tasks
+= Playbooks to demonstrate automation of AWS tasks
 
-== Create Instance(s)
+This Playbooks can be put into a Tower workflow, `create_vpc_complete.yml` uses `set_stats` to pass needed values (sec_group id, subnet id) to `create_instance.yml`.
+
+`create_vpc_complete.yml`->`create_instance.yml`
+
+Extra Vars for workflow example:
+----
+---
+vpc: "iacstart"
+vpc_name: "{{ vpc }}_VPC"
+igw_name: "{{ vpc }}_IGW"
+subnet_name: "{{ vpc }}_subnet"
+security_group_name: "{{ vpc }}_security_group"
+route_table_name: "{{ vpc }}_route_table"
+vpc_cidr: "10.0.0.0/16"
+subnet_cidr: "10.0.1.0/24"
+state: "present"
+region: "eu-central-1"
+ami_id: "ami-030f83540c1a25d7f"
+ssh_key: "grieger_ec2"
+----
+
+== Create Instance Playbook
 
 Name: `create_instance.yml`
 
 Variables with examples:
 
 ----
-ami_id: ami-030f83540c1a25d7f
-aws_key: grieger_ec2
-aws_region: eu-central-1
-security_group: towerdemo
-instcount: 2
+region:
+ssh_key:
+security_group_id:
+vpc_subnet_id:
+instance_type: 
+ami_id:
 ----
 
-== Create Security Group
-
-Name: create_secgroup.yml
-
-Variables with examples:
-
-----
-security_group:
-region:  
-----
-
-== Create VPC and all needed resources
+== Create VPC (and needed resources) Playbook
 
 Name: create_vpc_complete.yml
 
@@ -42,9 +53,4 @@ vpc_cidr: "10.0.0.0/16"
 subnet_cidr: "10.0.1.0/24"
 state: "present"
 region: "eu-central-1"
-
-acl_name: "{{ vpc }}_ACL"
-port22CidrBlock: "0.0.0.0/0"
-destinationCidrBlock: "0.0.0.0/0"
-zone: "us-east-1a"
 ----
