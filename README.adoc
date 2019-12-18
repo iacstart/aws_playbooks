@@ -32,19 +32,19 @@ Name: create_vpc_complete.yml
 Variables:
 
 ----
-vpc: 'your name'
+vpc: "iacstart"
 vpc_name: "{{ vpc }}_VPC"
 igw_name: "{{ vpc }}_IGW"
 subnet_name: "{{ vpc }}_subnet"
 security_group_name: "{{ vpc }}_security_group"
 route_table_name: "{{ vpc }}_route_table"
-vpc_cidr: '10.0.0.0/16'
-subnet_cidr: '10.0.1.0/24'
-state: 'present'
-region: 'eu-central-1'
+vpc_cidr: "10.0.0.0/16"
+subnet_cidr: "10.0.1.0/24"
+state: "present"
+region: "eu-central-1"
 
 acl_name: "{{ vpc }}_ACL"
-port22CidrBlock: '0.0.0.0/0'
-destinationCidrBlock: '0.0.0.0/0'
-zone: 'us-east-1a'
+port22CidrBlock: "0.0.0.0/0"
+destinationCidrBlock: "0.0.0.0/0"
+zone: "us-east-1a"
 ----
