@@ -1,0 +1,21 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+  - name: Provision a set of instances
+    ec2:
+      region: "{{ aws_region }}"
+      key_name: "{{ aws_key }}"
+      group: "{{ security_group }}"
+      instance_type: t2.micro
+      image: "{{ ami_id }}"
+      wait: true
+      instance_tags:
+        Name: towerdemo
+      exact_count: "{{ instcount }}"
+      count_tag: 
+        Name: towerdemo
+    register: ec2
+
