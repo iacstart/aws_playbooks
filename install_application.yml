@@ -1,7 +1,7 @@
 ---
-- hosts: iacstart
+- hosts: all
   connection: local
-  gather_facts: False
+  gather_facts: true
 
   tasks:
   - name: Ping servers
