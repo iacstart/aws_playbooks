@@ -1,0 +1,8 @@
+---
+- hosts: iacstart
+  connection: local
+  gather_facts: False
+
+  tasks:
+  - name: Ping servers
+    ping:
