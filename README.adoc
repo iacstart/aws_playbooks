@@ -1,5 +1,7 @@
 = Playbooks to demonstrate automation of AWS tasks
 
+== test
+
 This Playbooks can be put into a Tower workflow, `create_vpc_complete.yml` uses `set_stats` to pass needed values (sec_group id, subnet id) to `create_instance.yml`.
 
 `create_vpc_complete.yml` -> `create_instance.yml`
