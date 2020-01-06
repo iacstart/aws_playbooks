@@ -8,4 +8,6 @@
     ec2_eip:
       state: present
       region: eu-central-1
+      tag_name: name
+      tag_value: iacstart
     register: eip
