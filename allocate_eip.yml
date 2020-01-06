@@ -7,4 +7,5 @@
   - name: allocate a new elastic IP without associating it to anything
     ec2_eip:
       state: present
+      region: eu-central-1
     register: eip
