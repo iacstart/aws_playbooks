@@ -6,7 +6,6 @@ This Playbooks can be put into a Tower workflow, `create_vpc_complete.yml` uses 
 
 Extra Vars for workflow (example values):
 ----
----
 vpc: "iacstart"
 vpc_cidr: "10.0.0.0/16"
 subnet_cidr: "10.0.1.0/24"
