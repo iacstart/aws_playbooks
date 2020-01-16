@@ -19,7 +19,7 @@
     ec2_group:
       name: iac-database-access
       description: HTTPS, SSH, Psql and Redis access
-      vpc_id: "{{ {{ ec2_vpc_net_return.vpc.id }} }}"
+      vpc_id: "{{ ec2_vpc_net_return.vpc.id }}"
       rules:
         - proto: tcp
           ports:
