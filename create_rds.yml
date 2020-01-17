@@ -20,7 +20,7 @@
       name: iac-database-access
       description: HTTPS, SSH, Psql and Redis access
       region: "{{ region }}"
-      vpc_id: "{{ vpc_id }}"
+      #vpc_id: "{{ vpc_id }}"
       rules:
         - proto: tcp
           ports:
