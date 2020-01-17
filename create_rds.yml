@@ -45,4 +45,4 @@
       vpc_security_group_ids:
         - "{{ rds_sec_group_db_access.group_id }}"
       region: "{{ region }}"
-    register: scc_rds_instance
+    register: rds_instance
