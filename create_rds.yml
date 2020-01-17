@@ -44,6 +44,7 @@
       password: "mariadbpw"
       db_name: "iacdb"
       allocated_storage: 20
+      multi_az: no
       db_subnet_group_name: "{{ iac_rds_subnet_group.subnet_group.name }}"
       vpc_security_group_ids:
         - "{{ rds_sec_group_db_access.group_id }}"
