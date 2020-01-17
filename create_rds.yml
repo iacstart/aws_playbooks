@@ -41,7 +41,7 @@
       db_instance_class: db.t3.small
       db_instance_identifier: iac-db
       username: "mariadb"
-      password: "mariadb"
+      password: "mariadbpw"
       db_name: "iacdb"
       allocated_storage: 20
       vpc_security_group_ids:
