@@ -42,7 +42,7 @@
       db_instance_identifier: iac-db
       username: "mariadb"
       password: "mariadb"
-      db_name: "iac-db"
+      db_name: "iacdb"
       allocated_storage: 20
       vpc_security_group_ids:
         - "{{ rds_sec_group_db_access.group_id }}"
