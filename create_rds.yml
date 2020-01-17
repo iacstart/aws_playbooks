@@ -5,15 +5,15 @@
 
   tasks:
 
-  - name: create RDS subnet group
-    rds_subnet_group:
-      name: iac-rds-group
-      state: present
-      description: IAC RDS Subnet Group
-      region: "{{ region }}"
-      subnets:
-        - "{{ vpc_subnet_id }}"
-    register: iac_rds_subnet_group
+  # - name: create RDS subnet group
+  #   rds_subnet_group:
+  #     name: iac-rds-group
+  #     state: present
+  #     description: IAC RDS Subnet Group
+  #     region: "{{ region }}"
+  #     subnets:
+  #       - "{{ vpc_subnet_id }}"
+  #   register: iac_rds_subnet_group
 
   - name: create database security group
     ec2_group:
