@@ -39,6 +39,7 @@
       state: present
       engine: mariadb
       db_instance_class: db.t3.small
+      db_instance_identifier: iac-db
       username: "mariadb"
       password: "mariadb"
       db_name: "iac-db"
