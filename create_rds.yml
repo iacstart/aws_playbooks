@@ -50,5 +50,4 @@
         - "{{ rds_sec_group_db_access.group_id }}"
       region: "{{ region }}"
       wait: yes
-      wait_timeout: 1800
     register: rds_instance
