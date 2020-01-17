@@ -5,15 +5,15 @@
 
   tasks:
 
-  # - name: create RDS subnet group
-  #   rds_subnet_group:
-  #     name: iac-rds-group
-  #     state: present
-  #     description: IAC RDS Subnet Group
-  #     region: "{{ region }}"
-  #     subnets:
-  #      - "{{ vpc_subnet_id }}"
-  #   register: iac_rds_subnet_group
+  - name: create RDS subnet group
+    rds_subnet_group:
+      name: iac-rds-group
+      state: present
+      description: IAC RDS Subnet Group
+      region: "{{ region }}"
+      subnets:
+        - "{{ vpc_subnet_id }}"
+    register: iac_rds_subnet_group
 
   - name: create database security group
     ec2_group:
@@ -44,7 +44,10 @@
       password: "mariadbpw"
       db_name: "iacdb"
       allocated_storage: 20
+      db_subnet_group_name: "{{ iac_rds_subnet_group.subnet_group.name }}"
       vpc_security_group_ids:
         - "{{ rds_sec_group_db_access.group_id }}"
       region: "{{ region }}"
+      wait: yes
+      wait_timeout: 1800
     register: rds_instance
