@@ -69,4 +69,5 @@
       data:
         vpc_subnet_id:  "{{ ec2_vpc_subnet_return.subnet.id }}"
         security_group_id: "{{ ec2_group_return.group_id }}"
+        vpc_id: "{{ ec2_vpc_net_return.id }}"
     
