@@ -14,11 +14,12 @@
       image: "{{ ami_id }}"
       wait: true
       instance_tags:
-        Name: iacstart
+        Name: iacstart_web
         Type: webserver
+        Deployment: iacstart
       exact_count: "{{ webcount }}"
       count_tag: 
-        Name: iacstart
+        Name: iacstart_web
         Type: webserver
     register: ec2-web
 
@@ -39,12 +40,13 @@
       image: "{{ ami_id }}"
       wait: true
       instance_tags:
-        Name: iacstart
+        Name: iacstart_db
         Type: dbserver
+        Deployment: iacstart
       exact_count: "1"
       count_tag: 
-        Name: iacstart
-        Type: dbserver
+        Name: iacstart_db
+        Type: dbserver        
     register: ec2-db
 
   - name: Wait for SSH to come up
