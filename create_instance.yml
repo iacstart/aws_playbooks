@@ -33,6 +33,7 @@
       port: 22 
       state: started 
     with_items: "{{ ec2web.instances }}"
+    when: item.public_ip != ""
 
   - name: Provision database server
     ec2:
