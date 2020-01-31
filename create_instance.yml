@@ -4,7 +4,7 @@
   gather_facts: False
 
   tasks:
-  - name: Provision a set of instances
+  - name: Provision webservers
     ec2:
       region: "{{ region }}"
       key_name: "{{ ssh_key }}"
@@ -14,15 +14,42 @@
       image: "{{ ami_id }}"
       wait: true
       instance_tags:
-        Name: iacstart_webserver
-      #exact_count: "{{ instcount }}"
-      #count_tag: 
-        #Name: towerdemo
-    register: ec2
+        Name: iacstart
+        Type: webserver
+      exact_count: "{{ webcount }}"
+      count_tag: 
+        Name: iacstart
+        Type: webserver
+    register: ec2-web
 
   - name: Wait for SSH to come up
     wait_for:
       host: "{{ item.public_ip }}"
       port: 22 
       state: started 
-    with_items: "{{ ec2.instances }}"
+    with_items: "{{ ec2-web.instances }}"
+
+  - name: Provision database server
+    ec2:
+      region: "{{ region }}"
+      key_name: "{{ ssh_key }}"
+      group_id: "{{ security_group_id }}"
+      vpc_subnet_id: "{{ vpc_subnet_id }}"
+      instance_type: t2.micro
+      image: "{{ ami_id }}"
+      wait: true
+      instance_tags:
+        Name: iacstart
+        Type: dbserver
+      exact_count: "1"
+      count_tag: 
+        Name: iacstart
+        Type: dbserver
+    register: ec2-db
+
+  - name: Wait for SSH to come up
+    wait_for:
+      host: "{{ item.public_ip }}"
+      port: 22 
+      state: started 
+    with_items: "{{ ec2-db.instances }}"
