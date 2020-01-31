@@ -23,6 +23,10 @@
         Type: webserver
     register: ec2web
 
+  - name: debug
+    debug:
+      var: ec2web 
+
   - name: Wait for SSH to come up
     wait_for:
       host: "{{ item.public_ip }}"
