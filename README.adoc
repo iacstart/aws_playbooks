@@ -16,14 +16,15 @@ subnet_cidr: "10.0.1.0/24"
 state: "present"
 region: "eu-central-1"
 ami_id: "ami-030f83540c1a25d7f"
-ssh_key: "grieger_ec2"
+ssh_key: "ssh_key"
+instance_type: <instance type>
 ----
 
 == Create VPC (incl subnet, sec group etc) Playbook
 
 Name: `create_vpc_complete.yml`
 
-Variables with examples:
+Variables with examples when running standalone (not from workflow):
 
 ----
 ---
@@ -39,7 +40,7 @@ region: "eu-central-1"
 
 Name: `create_instance.yml`
 
-Variables with examples:
+Variables with examples when running standalone (not from workflow):
 
 ----
 ---
@@ -50,4 +51,5 @@ ssh_key: "ssh_key"
 webcount: "2"
 security_group_id: "sg-02394c8fayxcvbn"
 vpc_subnet_id: "subnet-0a4a9048yxcvbn"
+instance_type: <instance type>
 ----
