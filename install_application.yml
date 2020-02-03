@@ -6,3 +6,19 @@
   tasks:
   - name: Ping servers
     ping:
+  
+  - name: latest Apache version installed
+    yum:
+      name: httpd
+      state: latest
+  
+  - name: Apache enabled and running
+    service:
+      name: httpd
+      enabled: true
+      state: started
+  
+  - name: copy index.html
+    copy:
+      content: "<body><h1>Apache is running fine</h1></body>"
+      dest: /var/www/html/index.html
