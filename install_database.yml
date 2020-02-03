@@ -2,22 +2,25 @@
 
 - hosts: all
   gather_facts: true
-  remote_user: centos
+  remote_user: ubuntu
   become: true
 
   vars:
-    mariadb_bind_address: '0.0.0.0'
-    mariadb_root_password: super-secure-password
-    mariadb_users:
+    mysql_packages:
+      - python-mysqldb
+
+    mysql_root_password: super-secure-password
+    mysql_users:
       - name: webshop
         password: superSECR3T
+        state: present
         host: "%"
-        priv: '*.*:ALL,GRANT'
-    mariadb_databases:
+        priv: "*.*:ALL,GRANT"
+    mysql_databases:
       - name: webshop
         encoding: utf8
         collation: utf8_general_ci
 
   roles:
-    - role: bertvv.mariadb
+    - role: geerlingguy.mysql
       become: yes
