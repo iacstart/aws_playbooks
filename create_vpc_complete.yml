@@ -14,7 +14,7 @@
       tenancy: default
       state: "{{ state }}"
     register: ec2_vpc_net_return
-    
+
   - name: Add subnet to VPC
     ec2_vpc_subnet:
       state: "{{ state }}"
@@ -25,7 +25,7 @@
       resource_tags:
         Name: "{{ vpc }}_subnet"
     register: ec2_vpc_subnet_return
- 
+
   - name: Create an Internet Gateway (IGW)
     ec2_vpc_igw:
      vpc_id: "{{ ec2_vpc_net_return.vpc.id }}"
@@ -34,7 +34,7 @@
      tags:
        Name: "{{ vpc }}_igw"
     register: ec2_vpc_igw_return
-  
+
   - name: Create route table to IGW
     ec2_vpc_route_table:
       vpc_id: "{{ ec2_vpc_net_return.vpc.id }}"
@@ -46,7 +46,7 @@
           gateway_id: "{{ ec2_vpc_igw_return.gateway_id  }}"
       tags:
         Name: "{{ vpc }}_routetable }}"
- 
+
   - name: Create Security Group
     ec2_group:
       name: "{{ vpc }}_security_group"
@@ -62,11 +62,15 @@
           ports:
           - 22
           cidr_ip: 0.0.0.0/0
+        - proto: tcp
+          ports:
+          - 3306
+          cidr_ip: 0.0.0.0/0
     register: ec2_group_return
-    
+
   - name: Make result values available to Playbooks in workflow
     set_stats:
       data:
         vpc_subnet_id:  "{{ ec2_vpc_subnet_return.subnet.id }}"
         security_group_id: "{{ ec2_group_return.group_id }}"
-    
+

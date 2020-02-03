@@ -4,18 +4,6 @@
   gather_facts: False
 
   tasks:
-  - name: craete db security group
-    ec2_group:
-      name: "db_security_group"
-      description: DB MariaDB Security Group
-      vpc_id: "vpc-0b5f6efa571486f5e"
-      region: "{{ region }}"
-      rules:
-        - proto: tcp
-          ports:
-            - 3306
-          cidr_ip: 0.0.0.0/0
-    register: ec2_db_sec_group
 
   - name: Provision webservers
     ec2:
@@ -24,14 +12,14 @@
       group_id: "{{ security_group_id }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
       instance_type: "{{ instance_type }}"
-      image: "ami-0b418580298265d5c"
+      image: "{{ aim_id }}"
       wait: true
       instance_tags:
         Name: iacstart_web
         Type: webserver
         Deployment: iacstart
       exact_count: "{{ webcount | default('1') }}"
-      count_tag: 
+      count_tag:
         Name: iacstart_web
         Type: webserver
     register: ec2web
@@ -39,18 +27,16 @@
   - name: Wait for SSH to come up
     wait_for:
       host: "{{ item.public_ip }}"
-      port: 22 
-      state: started 
+      port: 22
+      state: started
     when: item.public_ip | ipaddr
     with_items: "{{ ec2web.instances }}"
-    
+
   - name: Provision database server
     ec2:
       region: "{{ region }}"
       key_name: "{{ ssh_key }}"
-      group_id:
-        - "{{ security_group_id }}"
-        - "{{ ec2_db_sec_group.group_id }}"
+      group_id: "{{ security_group_id }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
       instance_type: "{{ instance_type }}"
       image: "{{ ami_id }}"
@@ -60,15 +46,15 @@
         Type: dbserver
         Deployment: iacstart
       exact_count: "{{ dbcount | default('1') }}"
-      count_tag: 
+      count_tag:
         Name: iacstart_db
-        Type: dbserver        
+        Type: dbserver
     register: ec2db
 
   - name: Wait for SSH to come up
     wait_for:
       host: "{{ item.public_ip }}"
-      port: 22 
+      port: 22
       state: started
-    when: item.public_ip | ipaddr  
+    when: item.public_ip | ipaddr
     with_items: "{{ ec2db.instances }}"
