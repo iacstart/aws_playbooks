@@ -10,14 +10,14 @@
       key_name: "{{ ssh_key }}"
       group_id: "{{ security_group_id }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
-      instance_type: t2.micro
+      instance_type: "{{ instance_type }}"
       image: "{{ ami_id }}"
       wait: true
       instance_tags:
         Name: iacstart_web
         Type: webserver
         Deployment: iacstart
-      exact_count: "{{ webcount }}"
+      exact_count: "{{ webcount | default('1') }}"
       count_tag: 
         Name: iacstart_web
         Type: webserver
@@ -37,14 +37,14 @@
       key_name: "{{ ssh_key }}"
       group_id: "{{ security_group_id }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
-      instance_type: t2.micro
+      instance_type: "{{ instance_type }}"
       image: "{{ ami_id }}"
       wait: true
       instance_tags:
         Name: iacstart_db
         Type: dbserver
         Deployment: iacstart
-      exact_count: "1"
+      exact_count: "{{ dbcount | default('1') }}"
       count_tag: 
         Name: iacstart_db
         Type: dbserver        
