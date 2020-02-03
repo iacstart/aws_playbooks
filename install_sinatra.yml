@@ -1,0 +1,98 @@
+---
+- hosts: appserver
+  gather_facts: true
+  remote_user: ubuntu
+
+  vars:
+    install_path: /opt/iac_shop
+    db_name: webshop
+    db_user: webshop
+    db_password: superSECR3T
+    db_host: ec2-18-197-115-54.eu-central-1.compute.amazonaws.com
+
+  tasks:
+    - name: install software
+      apt:
+        pkg:
+          - git
+          - make
+          - gcc
+          - ruby
+          - ruby-dev
+          - ruby-bundler
+          - ruby-mysql2
+          - mariadb-server
+          - libmariadb-dev
+          - libmysqlclient-dev
+          - build-essential
+        update_cache: true
+      become: true
+
+    - name: create app folder
+      file:
+        path: "{{ install_path }}"
+        state: directory
+        owner: "{{ ansible_ssh_user }}"
+      become: true
+
+    - name: install bunlder gem
+      gem:
+        name: bundler
+        version: 2.1.4
+        state: present
+        user_install: false
+        env_shebang: true
+      become: true
+
+    - name: clone webshop repo
+      git:
+        repo: https://github.com/iacstart/iac_shop.git
+        dest: "{{ install_path }}"
+        force: true
+        version: develop
+
+    - name: install gems with bundler
+      bundler:
+        state: present
+        chdir: "{{ install_path }}"
+
+    - name: copy mysql database config
+      template:
+        src: database.yml.mysql.j2
+        dest: "{{ install_path }}/config/database.yml"
+        owner: "{{ ansible_ssh_user }}"
+
+    - name: setup database
+      command: "{{ item }}"
+      args:
+        chdir: "{{ install_path }}"
+      loop:
+        - "bundler exec rake db:create"
+        - "bundler exec rake db:migrate"
+        - "bundler exec rake db:setup"
+
+    - name: add start up script
+      template:
+        src: rackup_webshop.sh.j2
+        dest: "{{ install_path }}/rackup_webshop.sh"
+        mode: 0777
+        owner: "{{ ansible_ssh_user }}"
+
+    - name: copy service template
+      template:
+        src: webshop.service.j2
+        dest: "/etc/systemd/system/webshop.service"
+        mode: 0664
+      become: true
+
+    - name: enable webshop.service
+      systemd:
+        name: webshop
+        state: started
+        daemon_reload: yes
+        enabled: yes
+      become: true
+
+  handlers:
+    - name: restart systemd
+      systemd: name=webshop.service state=restarted daemon_reload=yes
