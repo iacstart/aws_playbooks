@@ -1,6 +1,6 @@
 ---
 
-- hosts: dbserver
+- hosts: all
   gather_facts: true
   remote_user: centos
   become: true
@@ -17,9 +17,6 @@
       - name: webshop
         encoding: utf8
         collation: utf8_general_ci
-
-  environment:
-    AWS_PROFILE: digitalpower
 
   roles:
     - role: bertvv.mariadb
