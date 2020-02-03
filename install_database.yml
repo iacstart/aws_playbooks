@@ -1,0 +1,26 @@
+---
+
+- hosts: dbserver
+  gather_facts: true
+  remote_user: centos
+  become: true
+
+  vars:
+    mariadb_bind_address: '0.0.0.0'
+    mariadb_root_password: super-secure-password
+    mariadb_users:
+      - name: webshop
+        password: superSECR3T
+        host: "%"
+        priv: '*.*:ALL,GRANT'
+    mariadb_databases:
+      - name: webshop
+        encoding: utf8
+        collation: utf8_general_ci
+
+  environment:
+    AWS_PROFILE: digitalpower
+
+  roles:
+    - role: bertvv.mariadb
+      become: yes

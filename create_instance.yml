@@ -4,6 +4,19 @@
   gather_facts: False
 
   tasks:
+  - name: craete db security group
+    ec2_group:
+      name: "db_security_group"
+      description: DB MariaDB Security Group
+      vpc_id: "vpc-0b5f6efa571486f5e"
+      region: "{{ region }}"
+      rules:
+        - proto: tcp
+          ports:
+            - 3306
+          cidr_ip: 0.0.0.0/0
+    register: ec2_db_sec_group
+
   - name: Provision webservers
     ec2:
       region: "{{ region }}"
@@ -11,7 +24,7 @@
       group_id: "{{ security_group_id }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
       instance_type: "{{ instance_type }}"
-      image: "{{ ami_id }}"
+      image: "ami-0b418580298265d5c"
       wait: true
       instance_tags:
         Name: iacstart_web
@@ -35,7 +48,9 @@
     ec2:
       region: "{{ region }}"
       key_name: "{{ ssh_key }}"
-      group_id: "{{ security_group_id }}"
+      group_id:
+        - "{{ security_group_id }}"
+        - "{{ ec2_db_sec_group.group_id }}"
       vpc_subnet_id: "{{ vpc_subnet_id }}"
       instance_type: "{{ instance_type }}"
       image: "{{ ami_id }}"
