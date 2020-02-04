@@ -20,7 +20,7 @@
       state: "{{ state }}"
       vpc_id: "{{ ec2_vpc_net_return.vpc.id }}"
       region: "{{ region }}"
-      aws_zone: "{{ aws_zone }}"
+      az: "{{ aws_zone }}"
       cidr: "{{ subnet_cidr }}"
       map_public: yes
       resource_tags:
