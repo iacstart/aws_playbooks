@@ -8,7 +8,7 @@
     db_name: webshop
     db_user: webshop
     db_password: superSECR3T
-    db_host: ec2-54-93-236-19.eu-central-1.compute.amazonaws.com
+    db_host: "{{ db_private_ip }}"
 
   tasks:
     - name: install software
