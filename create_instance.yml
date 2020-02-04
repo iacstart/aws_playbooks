@@ -58,3 +58,8 @@
       state: started
     when: item.public_ip | ipaddr
     with_items: "{{ ec2db.instances }}"
+    
+  - name: Make result values available to Playbooks in workflow
+    set_stats:
+      data:
+        db_private_ip:  "{{ ec2db.instances.private_ip }}"
