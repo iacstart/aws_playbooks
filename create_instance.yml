@@ -66,4 +66,4 @@
   - name: Make result values available to Playbooks in workflow
     set_stats:
       data:
-        db_private_ip:  "{{ ec2db.instances[0].private_ip }}"
+        db_private_ip:  "{{ ec2db.tagged_instances[0].private_ip }}"
