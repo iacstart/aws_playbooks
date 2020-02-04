@@ -59,9 +59,9 @@
     when: item.public_ip | ipaddr
     with_items: "{{ ec2db.instances }}"
     
-  - name: Print IPs
+  - name: Print register
     debug:
-      var: "{{ ec2db.instances.private_ip }}"
+      var: ec2db
     
   - name: Make result values available to Playbooks in workflow
     set_stats:
