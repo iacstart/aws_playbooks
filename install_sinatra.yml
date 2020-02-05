@@ -35,7 +35,7 @@
         owner: "{{ ansible_ssh_user }}"
       become: true
 
-    - name: install bunlder gem
+    - name: install bundler gem
       gem:
         name: bundler
         version: 2.1.4
@@ -62,15 +62,15 @@
         dest: "{{ install_path }}/config/database.yml"
         owner: "{{ ansible_ssh_user }}"
 
-    - name: setup database
-      command: "{{ item }}"
-      run_once: true
-      args:
-        chdir: "{{ install_path }}"
-      loop:
-        - "bundler exec rake db:create"
-        - "bundler exec rake db:migrate"
-        - "bundler exec rake db:setup"
+    #- name: setup database
+    #  command: "{{ item }}"
+    #  run_once: true
+    #  args:
+    #    chdir: "{{ install_path }}"
+    #  loop:
+    #    - "bundler exec rake db:create"
+    #    - "bundler exec rake db:migrate"
+    #    - "bundler exec rake db:setup"
 
     - name: add start up script
       template:
