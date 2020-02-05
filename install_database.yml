@@ -22,11 +22,15 @@
         collation: utf8_general_ci
 
   pre_tasks:
-    - name: Ensure MySQL Python Module is installed
-      apt:
-        name: "python-mysqldb"
+    - name: Install MySQL Python Packages
+      apt: 
+        name: "{{item}}"
         state: present
         update_cache: yes
+      with_items:
+        - python3-pip
+        - python3-mysqldb      
+        - python-mysqldb
 
   roles:
     - role: geerlingguy.mysql
