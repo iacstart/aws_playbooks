@@ -5,9 +5,9 @@
   remote_user: ubuntu
   become: true
 
-  vars:
-    mysql_packages:
-      - python-mysqldb
+  #vars:
+  #  mysql_packages:
+  #    - python-mysqldb
 
     mysql_root_password: super-secure-password
     mysql_users:
