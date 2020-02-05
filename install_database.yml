@@ -21,6 +21,12 @@
         encoding: utf8
         collation: utf8_general_ci
 
+  pre_tasks:
+    - name: Ensure MySQL Python Module is installed
+      apt:
+        name: "python-mysqldb"
+        state: present
+
   roles:
     - role: geerlingguy.mysql
     #- role: ansible-role-mysql
