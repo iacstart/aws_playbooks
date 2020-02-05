@@ -93,7 +93,6 @@
 
     - name: setup database
       command: "{{ item }}"
-      run_once: true
       args:
         chdir: "{{ install_path }}"
       loop:
