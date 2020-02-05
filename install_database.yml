@@ -5,7 +5,7 @@
   remote_user: ubuntu
   become: true
 
-  #vars:
+  vars:
   #  mysql_packages:
   #    - python-mysqldb
 
