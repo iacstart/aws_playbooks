@@ -1,1 +1,2 @@
-- src: https://github.com/goetzrieger/ansible-role-mysql
+#- src: https://github.com/goetzrieger/ansible-role-mysql
+- src: geerlingguy.mysql
