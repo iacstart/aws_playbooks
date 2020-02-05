@@ -67,8 +67,4 @@
     set_stats:
       data:
         db_private_ip:  "{{ ec2db.tagged_instances[0].private_ip }}"
-        
-  - name: Debug IP
-    debug:
-      var: db_private_ip
-      
+    
