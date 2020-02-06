@@ -8,7 +8,7 @@
     ec2_group:
       name: "{{ vpc }}_security_group"
       description: HTTP and SSH Security Group
-      vpc_id: "{{ ec2_vpc_net_return.vpc.id }}"
+      vpc_id: "{{ vpc_id }}"
       region: "{{ region }}"
       rules:
         - proto: tcp
