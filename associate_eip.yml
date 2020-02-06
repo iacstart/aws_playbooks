@@ -6,6 +6,6 @@
   tasks:
   - name: associate an elastic IP with an instance
     ec2_eip:
-      device_id: "{{ device_id }}"
+      instance_id: "{{ device_id }}"
       ip: "{{ ip }}"
       allow_reassociation: yes
