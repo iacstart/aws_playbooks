@@ -69,15 +69,26 @@
         dest: "{{ install_path }}/config/database.yml"
         owner: "{{ ansible_ssh_user }}"
 
+    - name: check if dbinstalled touch file exists
+      stat: 
+        path: /tmp/dbinstalled
+      register: dbinstalled
+
     - name: setup database
       command: "{{ item }}"
       run_once: true
       args:
         chdir: "{{ install_path }}"
+      when: dbinstalled.stat.exists == False  
       loop:
         - "bundler exec rake db:create"
         - "bundler exec rake db:migrate"
         - "bundler exec rake db:setup"
+
+    - name: Touch DB installed
+      file:
+        path: /tmp/dbinstalled
+        state: touch
 
     - name: add start up script
       template:
