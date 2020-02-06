@@ -13,14 +13,20 @@
       
     - name: Create Mount Point
       file:
-        path: "/opt/iac_shop/public/images/robo"
+        path: "/mnt/images"
         state: directory
         owner: "{{ ansible_ssh_user }}"
       
     - name: Mount NetApp NFS Share
       mount: 
-        path: /opt/iac_shop/public/images/robo
+        path: /mnt/images
         src: 10.10.10.4:/elated-fervent-engelbart
         fstype: nfs
         opts: ro,hard,rsize=65536,wsize=65536,vers=3,tcp
         state: present
+
+    - name: Create symbolic link 
+      file:
+        src: "/mnt/images/"
+        dest: "/opt/iac_shop/public/images/robo"
+        state: link
