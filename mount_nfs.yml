@@ -1,6 +1,8 @@
 ---
 - hosts: all
   gather_facts: false
+  remote_user: ubuntu
+  become: true
 
   tasks:
     - name: Install Software
