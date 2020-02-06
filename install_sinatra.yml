@@ -51,6 +51,13 @@
         force: true
         version: develop
 
+    - name: Create symbolic link 
+      file:
+        src: "/mnt/images"
+        dest: "/opt/iac_shop/public/images/robo"
+        force: yes
+        state: link    
+
     - name: install gems with bundler
       bundler:
         state: present
