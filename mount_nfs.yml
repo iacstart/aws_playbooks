@@ -27,6 +27,6 @@
 
     - name: Create symbolic link 
       file:
-        src: "/mnt/images/"
+        src: "/mnt/images"
         dest: "/opt/iac_shop/public/images/robo"
         state: link
