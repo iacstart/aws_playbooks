@@ -7,5 +7,5 @@
   - name: allocate a new elastic IP without associating it to anything
     ec2_eip:
       state: present
-      region: us-east-1
+      region: "{{ region }}"
     register: eip
