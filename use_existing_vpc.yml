@@ -6,7 +6,7 @@
   tasks:
   - name: Create Security Group
     ec2_group:
-      name: "{{ vpc }}_security_group"
+      name: "security_group"
       description: HTTP and SSH Security Group
       vpc_id: "{{ vpc_id }}"
       region: "{{ region }}"
