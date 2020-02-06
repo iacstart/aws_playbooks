@@ -15,7 +15,6 @@
       file:
         path: "/mnt/images"
         state: directory
-        owner: "{{ ansible_ssh_user }}"
       
     - name: Mount NetApp NFS Share
       mount: 
@@ -23,5 +22,5 @@
         src: 10.10.10.4:/elated-fervent-engelbart
         fstype: nfs
         opts: ro,hard,rsize=65536,wsize=65536,vers=3,tcp
-        state: present
+        state: mounted
 
