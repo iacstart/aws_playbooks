@@ -1,0 +1,32 @@
+---
+- hosts: localhost
+  connection: local
+  gather_facts: False
+
+  tasks:
+  - name: Create Security Group
+    ec2_group:
+      name: "{{ vpc }}_security_group"
+      description: HTTP and SSH Security Group
+      vpc_id: "{{ ec2_vpc_net_return.vpc.id }}"
+      region: "{{ region }}"
+      rules:
+        - proto: tcp
+          ports:
+          - 80
+          cidr_ip: 0.0.0.0/0
+        - proto: tcp
+          ports:
+          - 22
+          cidr_ip: 0.0.0.0/0
+        - proto: tcp
+          ports:
+          - 3306
+          cidr_ip: 0.0.0.0/0
+    register: ec2_group_return
+
+  - name: Make result values available to Playbooks in workflow
+    set_stats:
+      data:
+        security_group_id: "{{ ec2_group_return.group_id }}"
+
