@@ -35,7 +35,7 @@
         owner: "{{ ansible_ssh_user }}"
       become: true
 
-    - name: install bunlder gem
+    - name: install bundler gem
       gem:
         name: bundler
         version: 2.1.4
