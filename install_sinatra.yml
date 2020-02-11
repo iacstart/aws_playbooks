@@ -4,11 +4,6 @@
   remote_user: ubuntu
 
   vars:
-    install_path: /opt/iac_shop
-    db_name: webshop
-    db_user: webshop
-    db_password: superSECR3T
-    db_host: "{{ db_private_ip }}"
 
   tasks:
     - name: install software
@@ -44,19 +39,22 @@
         env_shebang: true
       become: true
 
+    - name: check nft mount exists
+      stat:
+        path: /mnt/images/
+      register: nfs_mounted
+
+    - name: override software version
+      set_fact:
+        app_version: "{{ app_version_mount }}"
+      when: nfs_mounted.stat.isdir is defined and nfs_mounted.stat.isdir
+
     - name: clone webshop repo
       git:
         repo: https://github.com/iacstart/iac_shop.git
         dest: "{{ install_path }}"
         force: true
-        version: develop
-
-    - name: Create symbolic link 
-      file:
-        src: "/mnt/images"
-        dest: "/opt/iac_shop/public/images/robo"
-        force: yes
-        state: link    
+        version: "{{ app_version | default('develop', true) }}"
 
     - name: install gems with bundler
       bundler:
@@ -70,7 +68,7 @@
         owner: "{{ ansible_ssh_user }}"
 
     - name: check if dbinstalled touch file exists
-      stat: 
+      stat:
         path: /tmp/dbinstalled
       register: dbinstalled
 
@@ -79,7 +77,7 @@
       run_once: true
       args:
         chdir: "{{ install_path }}"
-      when: dbinstalled.stat.exists == False  
+      when: dbinstalled.stat.exists == False
       loop:
         - "bundler exec rake db:create"
         - "bundler exec rake db:migrate"
