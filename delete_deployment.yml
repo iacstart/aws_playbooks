@@ -11,12 +11,16 @@
         "tag:Deployment": "iacstart"
     register: ec2_instances
 
+    debug:
+      vars: ec2_instances
+
   - name: Terminate EC2 instances
     ec2:
       region: "{{ region }}"
       instance_ids: "{{ item }}"
       state: 'absent'
-    with_items: "{{ ec2_instances }}"
+      wait: yes
+    with_items: "{{ ec2_instances.id }}"
 
   - name: Delete VPC
     ec2_vpc_net:   
