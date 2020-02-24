@@ -5,6 +5,12 @@
 
   vars:
     install_path: "/opt/iac_shop"
+    db_name: webshop
+    db_user: webshop
+    db_password: superSECR3T
+    db_host: "{{ db_private_ip }}"
+    app_version: "develop"
+    app_version_mount: "v1.2.0"
 
   tasks:
     - name: install software
