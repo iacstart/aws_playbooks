@@ -11,7 +11,7 @@
         "tag:Deployment": "iacstart"
     register: ec2_instances
 
-    debug:
+  - debug:
       vars: ec2_instances
 
   - name: Terminate EC2 instances
