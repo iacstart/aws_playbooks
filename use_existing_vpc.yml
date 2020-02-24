@@ -26,6 +26,7 @@
     register: ec2_group_return
 
   - ec2_vpc_subnet_info:
+      region: "{{ region }}"
       filters:
         vpc-id: "{{ vpc_id }}"
     register: subnet    
