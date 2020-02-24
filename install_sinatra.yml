@@ -4,6 +4,7 @@
   remote_user: ubuntu
 
   vars:
+    install_path: "/opt/iac_shop"
 
   tasks:
     - name: install software
