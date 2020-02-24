@@ -34,6 +34,6 @@
   - name: Make result values available to Playbooks in workflow
     set_stats:
       data:
-        vpc_subnet_id: "{{ subnet.subnets[0].id] }}"
+        vpc_subnet_id: "{{ subnet.subnets[0].id }}"
         security_group_id: "{{ ec2_group_return.group_id }}"
 
