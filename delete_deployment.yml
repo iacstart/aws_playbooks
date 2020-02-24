@@ -17,10 +17,10 @@
   - name: Terminate EC2 instances
     ec2:
       region: "{{ region }}"
-      instance_ids: "{{ item }}"
+      instance_ids: "{{ item.instance_id }}"
       state: 'absent'
       wait: yes
-    with_items: "{{ ec2.instances.instance_id }}"
+    with_items: "{{ ec2.instances }}"
 
   - name: Delete VPC
     ec2_vpc_net:   
