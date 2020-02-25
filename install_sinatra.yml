@@ -71,6 +71,14 @@
         state: link
       when: nfs_mounted.stat.isdir is defined and nfs_mounted.stat.isdir
 
+    - name: overried seeds.rb for netapp
+      copy:
+        src: "{{ install_path }}/db/seeds_netapp.rb"
+        dest: "{{ install_path }}/db/seeds.rb"
+        remote_src: yes
+        force: yes
+      when: nfs_mounted.stat.isdir is defined and nfs_mounted.stat.isdir
+
     - name: install gems with bundler
       bundler:
         state: present
