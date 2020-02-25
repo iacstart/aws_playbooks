@@ -10,7 +10,7 @@
     db_password: superSECR3T
     db_host: "{{ db_private_ip }}"
     app_version: "develop"
-    app_version_mount: "v1.2.0"
+    app_version_mount: "develop"
 
   tasks:
     - name: install software
