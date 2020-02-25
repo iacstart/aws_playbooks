@@ -63,6 +63,14 @@
         force: true
         version: "{{ app_version | default('develop', true) }}"
 
+    - name: Create symbolic link
+      file:
+        src: "/mnt/images"
+        dest: "/opt/iac_shop/public/images/robo"
+        force: yes
+        state: link
+      when: nfs_mounted.stat.isdir is defined and nfs_mounted.stat.isdir
+
     - name: install gems with bundler
       bundler:
         state: present
